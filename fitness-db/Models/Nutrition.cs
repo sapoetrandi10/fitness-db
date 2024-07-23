@@ -9,10 +9,10 @@ namespace fitness_db.Models
         [Key]
         public int NutritionID { get; set; }
         public string NutritionName { get; set; }
-        public float Calories { get; set; }
-        public float Protein { get; set; }
-        public float Carbs { get; set; }
-        public float Fat { get; set; }
+        public float Calories { get; set; } = 0;
+        public float Protein { get; set; } = 0;
+        public float Carbs { get; set; } = 0;
+        public float Fat { get; set; } = 0;
 
 
         public ICollection<UserNutrition> UserNutritions { get; set; }

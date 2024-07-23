@@ -13,8 +13,8 @@ namespace fitness_db.Models
         public int WorkoutID { get; set; }
         public string WorkoutName { get; set; }
         public string Description { get; set; }
-        public int Duration { get; set; }
-        public float CaloriesBurned { get; set; }
+        public int Duration { get; set; } = 0;
+        public float CaloriesBurned { get; set; } = 0;
 
 
         public ICollection<UserWorkout> UserWorkouts { get; set; }

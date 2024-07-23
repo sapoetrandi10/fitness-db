@@ -9,7 +9,8 @@ namespace fitness_db.Models
         public int UserWorkoutID { get; set; }
         public int UserID { get; set; }
         public int WorkoutID { get; set; }
-        public DateTime UserWorkoutDate { get; set; }
+        public int WorkoutDuration { get; set; }
+        public DateTime UserWorkoutDate { get; set; } = DateTime.Now;
 
 
         public User User { get; set; }

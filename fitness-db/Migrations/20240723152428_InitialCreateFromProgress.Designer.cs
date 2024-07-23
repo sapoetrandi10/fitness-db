@@ -12,8 +12,8 @@ using fitness_db.Data;
 namespace fitness_db.Migrations
 {
     [DbContext(typeof(FitnessContext))]
-    [Migration("20240722093934_InitialCreateFromUserService")]
-    partial class InitialCreateFromUserService
+    [Migration("20240723152428_InitialCreateFromProgress")]
+    partial class InitialCreateFromProgress
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -55,8 +55,11 @@ namespace fitness_db.Migrations
 
             modelBuilder.Entity("fitness_db.Models.Progress", b =>
                 {
-                    b.Property<int>("UserID")
+                    b.Property<int>("ProgressID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProgressID"), 1L, 1);
 
                     b.Property<float>("CaloriesBurned")
                         .HasColumnType("real");
@@ -67,13 +70,15 @@ namespace fitness_db.Migrations
                     b.Property<DateTime>("ProgressDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ProgressID")
+                    b.Property<int>("UserID")
                         .HasColumnType("int");
 
                     b.Property<float>("Weight")
                         .HasColumnType("real");
 
-                    b.HasKey("UserID");
+                    b.HasKey("ProgressID");
+
+                    b.HasIndex("UserID");
 
                     b.ToTable("progresses");
                 });
@@ -110,27 +115,41 @@ namespace fitness_db.Migrations
 
             modelBuilder.Entity("fitness_db.Models.UserNutrition", b =>
                 {
+                    b.Property<int>("UserNutritionID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserNutritionID"), 1L, 1);
+
                     b.Property<int>("UserID")
                         .HasColumnType("int");
 
                     b.Property<int>("NutritionID")
                         .HasColumnType("int");
 
+                    b.Property<int>("Qty")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("UserNutritionDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UserNutritionID")
-                        .HasColumnType("int");
-
-                    b.HasKey("UserID", "NutritionID");
+                    b.HasKey("UserNutritionID", "UserID", "NutritionID");
 
                     b.HasIndex("NutritionID");
+
+                    b.HasIndex("UserID");
 
                     b.ToTable("userNutritions");
                 });
 
             modelBuilder.Entity("fitness_db.Models.UserWorkout", b =>
                 {
+                    b.Property<int>("UserWorkoutID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserWorkoutID"), 1L, 1);
+
                     b.Property<int>("UserID")
                         .HasColumnType("int");
 
@@ -140,10 +159,12 @@ namespace fitness_db.Migrations
                     b.Property<DateTime>("UserWorkoutDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UserWorkoutID")
+                    b.Property<int>("WorkoutDuration")
                         .HasColumnType("int");
 
-                    b.HasKey("UserID", "WorkoutID");
+                    b.HasKey("UserWorkoutID", "UserID", "WorkoutID");
+
+                    b.HasIndex("UserID");
 
                     b.HasIndex("WorkoutID");
 

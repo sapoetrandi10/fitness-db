@@ -14,7 +14,8 @@ namespace fitness_db.Models
         public int UserNutritionID { get; set; }
         public int UserID { get; set; }
         public int NutritionID { get; set; }
-        public DateTime UserNutritionDate { get; set; }
+        public int Qty { get; set; }
+        public DateTime UserNutritionDate { get; set; } = DateTime.Now;
 
 
         public User User { get; set; }

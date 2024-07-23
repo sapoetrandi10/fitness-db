@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace fitness_db.Migrations
 {
-    public partial class InitialCreateFromUserService : Migration
+    public partial class InitialCreateFromProgress : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -63,8 +63,9 @@ namespace fitness_db.Migrations
                 name: "progresses",
                 columns: table => new
                 {
+                    ProgressID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     UserID = table.Column<int>(type: "int", nullable: false),
-                    ProgressID = table.Column<int>(type: "int", nullable: false),
                     ProgressDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Weight = table.Column<float>(type: "real", nullable: false),
                     CaloriesConsumed = table.Column<float>(type: "real", nullable: false),
@@ -72,7 +73,7 @@ namespace fitness_db.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_progresses", x => x.UserID);
+                    table.PrimaryKey("PK_progresses", x => x.ProgressID);
                     table.ForeignKey(
                         name: "FK_progresses_users_UserID",
                         column: x => x.UserID,
@@ -85,14 +86,16 @@ namespace fitness_db.Migrations
                 name: "userNutritions",
                 columns: table => new
                 {
+                    UserNutritionID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     UserID = table.Column<int>(type: "int", nullable: false),
                     NutritionID = table.Column<int>(type: "int", nullable: false),
-                    UserNutritionID = table.Column<int>(type: "int", nullable: false),
+                    Qty = table.Column<int>(type: "int", nullable: false),
                     UserNutritionDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_userNutritions", x => new { x.UserID, x.NutritionID });
+                    table.PrimaryKey("PK_userNutritions", x => new { x.UserNutritionID, x.UserID, x.NutritionID });
                     table.ForeignKey(
                         name: "FK_userNutritions_nutritions_NutritionID",
                         column: x => x.NutritionID,
@@ -111,14 +114,16 @@ namespace fitness_db.Migrations
                 name: "userWorkouts",
                 columns: table => new
                 {
+                    UserWorkoutID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     UserID = table.Column<int>(type: "int", nullable: false),
                     WorkoutID = table.Column<int>(type: "int", nullable: false),
-                    UserWorkoutID = table.Column<int>(type: "int", nullable: false),
+                    WorkoutDuration = table.Column<int>(type: "int", nullable: false),
                     UserWorkoutDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_userWorkouts", x => new { x.UserID, x.WorkoutID });
+                    table.PrimaryKey("PK_userWorkouts", x => new { x.UserWorkoutID, x.UserID, x.WorkoutID });
                     table.ForeignKey(
                         name: "FK_userWorkouts_users_UserID",
                         column: x => x.UserID,
@@ -134,9 +139,24 @@ namespace fitness_db.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_progresses_UserID",
+                table: "progresses",
+                column: "UserID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_userNutritions_NutritionID",
                 table: "userNutritions",
                 column: "NutritionID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_userNutritions_UserID",
+                table: "userNutritions",
+                column: "UserID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_userWorkouts_UserID",
+                table: "userWorkouts",
+                column: "UserID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_userWorkouts_WorkoutID",

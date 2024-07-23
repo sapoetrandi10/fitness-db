@@ -13,10 +13,10 @@ namespace fitness_db.Models
         [Key]
         public int ProgressID { get; set; }
         public int UserID { get; set; }
-        public DateTime ProgressDate { get; set; }
-        public float Weight { get; set; }
-        public float CaloriesConsumed { get; set; }
-        public float CaloriesBurned { get; set; }
+        public DateTime ProgressDate { get; set; } = DateTime.Now;
+        public float Weight { get; set; } = 0;
+        public float CaloriesConsumed { get; set; } = 0;
+        public float CaloriesBurned { get; set; } = 0;
 
 
         public User User { get; set; }

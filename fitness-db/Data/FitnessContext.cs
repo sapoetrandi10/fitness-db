@@ -24,7 +24,8 @@ namespace fitness_db.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<UserNutrition>().HasKey(un => new { un.UserID, un.NutritionID });
+            modelBuilder.Entity<UserNutrition>().Property(u => u.UserNutritionID).UseIdentityColumn();
+            modelBuilder.Entity<UserNutrition>().HasKey(un => new { un.UserNutritionID, un.UserID, un.NutritionID });
             modelBuilder.Entity<UserNutrition>()
                 .HasOne(u => u.User)
                 .WithMany(un => un.UserNutritions)
@@ -35,7 +36,8 @@ namespace fitness_db.Data
                 .HasForeignKey(n => n.NutritionID);
 
 
-            modelBuilder.Entity<UserWorkout>().HasKey(uw => new { uw.UserID, uw.WorkoutID });
+            modelBuilder.Entity<UserWorkout>().Property(u => u.UserWorkoutID).UseIdentityColumn();
+            modelBuilder.Entity<UserWorkout>().HasKey(uw => new { uw.UserWorkoutID, uw.UserID, uw.WorkoutID });
             modelBuilder.Entity<UserWorkout>()
                 .HasOne(u => u.User)
                 .WithMany(uw => uw.UserWorkouts)
@@ -46,7 +48,8 @@ namespace fitness_db.Data
                 .HasForeignKey(w => w.WorkoutID);
 
 
-            modelBuilder.Entity<Progress>().HasKey(p => new { p.UserID });
+            modelBuilder.Entity<Progress>().Property(p => p.ProgressID).UseIdentityColumn();
+            modelBuilder.Entity<Progress>().HasKey(p => new { p.ProgressID });
             modelBuilder.Entity<Progress>()
                 .HasOne(u => u.User)
                 .WithMany(p => p.Progresses)
